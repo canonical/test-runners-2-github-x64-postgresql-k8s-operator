@@ -1,0 +1,24 @@
+[32mINFO    [0m pytest_operator.plugin:plugin.py:862 Model status:
+
+Model  Controller          Cloud/Region        Version  SLA          Timestamp
+test   microk8s-localhost  microk8s/localhost  3.1.8    unsupported  01:31:44Z
+
+App                  Version  Status   Scale  Charm                Channel  Rev  Address         Exposed  Message
+another-database              waiting    0/3  postgresql-k8s                  1  10.152.183.61   no       installing agent
+database                      error      0/3  postgresql-k8s                  0  10.152.183.154  no       create Pod database-1 in StatefulSet database failed error: failed to create PVC database-pgdata-9dd3586e-database-1:...
+postgresql-test-app           active       2  postgresql-test-app  edge     144  10.152.183.31   no       
+
+Unit                    Workload  Agent       Address       Ports  Message
+another-database/0*     waiting   allocating                       agent initialising
+another-database/1      waiting   allocating                       installing agent
+another-database/2      waiting   allocating                       installing agent
+database/0*             waiting   allocating  10.1.162.208         agent initialising
+database/1              waiting   allocating  10.1.162.210         agent initialising
+database/2              waiting   allocating  10.1.162.209         agent initialising
+postgresql-test-app/0*  active    idle        10.1.162.200         
+postgresql-test-app/1   active    idle        10.1.162.201         
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:868 Juju error logs:
+
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:947 Forgetting model main...
