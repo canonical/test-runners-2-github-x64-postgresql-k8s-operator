@@ -1,0 +1,43 @@
+[32mINFO    [0m pytest_operator.plugin:plugin.py:862 Model status:
+
+Model  Controller          Cloud/Region        Version  SLA          Timestamp
+test   microk8s-localhost  microk8s/localhost  3.1.8    unsupported  01:41:03Z
+
+App                   Version  Status  Scale  Charm                Channel  Rev  Address         Exposed  Message
+postgresql-k8s        14.11    error       3  postgresql-k8s                  0  10.152.183.71   no       hook failed: "db-relation-broken"
+postgresql-test-app            active      1  postgresql-test-app  edge     148  10.152.183.105  no       
+postgresql-test-app2           active      1  postgresql-test-app  edge     148  10.152.183.140  no       
+
+Unit                     Workload  Agent      Address     Ports  Message
+postgresql-k8s/0*        error     idle       10.1.6.203         hook failed: "db-relation-broken"
+postgresql-k8s/1         active    idle       10.1.6.204         
+postgresql-k8s/2         active    idle       10.1.6.205         
+postgresql-test-app2/0*  active    executing  10.1.6.209         (config-changed) 
+postgresql-test-app/0*   active    executing  10.1.6.208         (config-changed) 
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:868 Juju error logs:
+
+unit-postgresql-k8s-2: 01:39:28 ERROR unit.postgresql-k8s/2.juju-log db:7: ERROR - `extensions` (pg_trgm, unaccent) cannot be requested through relations - Please enable extensions through `juju config` and add the relation again.
+unit-postgresql-k8s-2: 01:39:29 ERROR unit.postgresql-k8s/2.juju-log db:8: ERROR - `extensions` (unaccent, pg_trgm) cannot be requested through relations - Please enable extensions through `juju config` and add the relation again.
+unit-postgresql-k8s-0: 01:40:59 ERROR unit.postgresql-k8s/0.juju-log failed to change plugins: 
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-0/charm/lib/charms/postgresql_k8s/v0/postgresql.py", line 301, in enable_disable_extensions
+    with self._connect_to_database() as connection, connection.cursor() as cursor:
+  File "/var/lib/juju/agents/unit-postgresql-k8s-0/charm/lib/charms/postgresql_k8s/v0/postgresql.py", line 128, in _connect_to_database
+    connection = psycopg2.connect(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-0/charm/venv/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "postgresql-k8s-primary.test.svc.cluster.local" (10.152.183.173), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-0/charm/./src/charm.py", line 546, in enable_disable_extensions
+    self.postgresql.enable_disable_extensions(extensions, database)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-0/charm/lib/charms/postgresql_k8s/v0/postgresql.py", line 325, in enable_disable_extensions
+    raise PostgreSQLEnableDisableExtensionError()
+charms.postgresql_k8s.v0.postgresql.PostgreSQLEnableDisableExtensionError
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:947 Forgetting model main...

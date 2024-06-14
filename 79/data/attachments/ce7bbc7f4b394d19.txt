@@ -1,0 +1,238 @@
+[32mINFO    [0m integration.test_backups:test_backups.py:80 deleting the previously created backups
+[32mINFO    [0m pytest_operator.plugin:plugin.py:862 Model status:
+
+Model  Controller          Cloud/Region        Version  SLA          Timestamp
+test   microk8s-localhost  microk8s/localhost  3.1.8    unsupported  01:43:07Z
+
+App                       Version  Status  Scale  Charm                     Channel        Rev  Address        Exposed  Message
+postgresql-k8s-aws        14.11    active      2  postgresql-k8s                             0  10.152.183.97  no       Primary
+s3-integrator                      active      1  s3-integrator             latest/stable   17  10.152.183.62  no       
+self-signed-certificates           active      1  self-signed-certificates  latest/stable   72  10.152.183.49  no       
+
+Unit                         Workload  Agent      Address       Ports  Message
+postgresql-k8s-aws/0*        active    executing  10.1.149.140         Primary
+postgresql-k8s-aws/1         active    idle       10.1.149.141         
+s3-integrator/0*             active    idle       10.1.149.136         
+self-signed-certificates/0*  active    idle       10.1.149.137         
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:868 Juju error logs:
+
+unit-postgresql-k8s-aws-0: 01:36:51 ERROR unit.postgresql-k8s-aws/0.juju-log certificates:5: Uncaught exception while in charm code:
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 537, in _make_request
+    response = conn.getresponse()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connection.py", line 466, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.10/socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/util/retry.py", line 470, in increment
+    raise reraise(type(error), error, _stacktrace)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/util/util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 537, in _make_request
+    response = conn.getresponse()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connection.py", line 466, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.10/socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/src/patroni.py", line 462, in reload_patroni_configuration
+    requests.post(f"{self._patroni_url}/reload", verify=self._verify)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/adapters.py", line 682, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/./src/charm.py", line 1691, in <module>
+    main(PostgresqlOperatorCharm, use_juju_for_storage=True)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 544, in main
+    manager.run()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 520, in run
+    self._emit()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 509, in _emit
+    _emit_charm_event(self.charm, self.dispatcher.event_name)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 143, in _emit_charm_event
+    event_to_emit.emit(*args, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 352, in emit
+    framework._emit(event)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 851, in _emit
+    self._reemit(event_path)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 941, in _reemit
+    custom_handler(event)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/lib/charms/tls_certificates_interface/v2/tls_certificates.py", line 1824, in _on_relation_changed
+    self.on.certificate_available.emit(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 352, in emit
+    framework._emit(event)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 851, in _emit
+    self._reemit(event_path)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 941, in _reemit
+    custom_handler(event)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/lib/charms/postgresql_k8s/v0/postgresql_tls.py", line 141, in _on_certificate_available
+    if not self.charm.push_tls_files_to_workload():
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/./src/charm.py", line 1414, in push_tls_files_to_workload
+    return self.update_config()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/./src/charm.py", line 1508, in update_config
+    self._handle_postgresql_restart_need()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/./src/charm.py", line 1555, in _handle_postgresql_restart_need
+    self._patroni.reload_patroni_configuration()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f1cce727fa0 state=finished raised ConnectionError>]
+unit-postgresql-k8s-aws-0: 01:36:52 ERROR juju.worker.uniter.operation hook "certificates-relation-changed" (via hook dispatching script: dispatch) failed: exit status 1
+unit-postgresql-k8s-aws-0: 01:36:53 ERROR unit.postgresql-k8s-aws/0.juju-log failed to get primary with error RetryError[<Future at 0x7f896ffb67d0 state=finished raised ConnectionError>]
+unit-postgresql-k8s-aws-0: 01:40:06 ERROR unit.postgresql-k8s-aws/0.juju-log Uncaught exception while in charm code:
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 537, in _make_request
+    response = conn.getresponse()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connection.py", line 466, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.10/socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/util/retry.py", line 470, in increment
+    raise reraise(type(error), error, _stacktrace)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/util/util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connectionpool.py", line 537, in _make_request
+    response = conn.getresponse()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/urllib3/connection.py", line 466, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.10/socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 470, in __call__
+    result = fn(*args, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/src/patroni.py", line 200, in cluster_members
+    r = requests.get(f"{self._patroni_url}/cluster", verify=self._verify)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/requests/adapters.py", line 682, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/./src/charm.py", line 1691, in <module>
+    main(PostgresqlOperatorCharm, use_juju_for_storage=True)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 544, in main
+    manager.run()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 520, in run
+    self._emit()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 509, in _emit
+    _emit_charm_event(self.charm, self.dispatcher.event_name)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/main.py", line 143, in _emit_charm_event
+    event_to_emit.emit(*args, **kwargs)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 352, in emit
+    framework._emit(event)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 851, in _emit
+    self._reemit(event_path)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/ops/framework.py", line 941, in _reemit
+    custom_handler(event)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/./src/charm.py", line 396, in _on_peer_relation_changed
+    self._add_members(event)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/./src/charm.py", line 586, in _add_members
+    if self._patroni.cluster_members == self._hosts:
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 330, in wrapped_f
+    return self(f, *args, **kw)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 467, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 368, in iter
+    result = action(retry_state)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-0/charm/venv/tenacity/__init__.py", line 411, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f0c3e26b640 state=finished raised ConnectionError>]
+unit-postgresql-k8s-aws-0: 01:40:07 ERROR juju.worker.uniter.operation hook "secret-changed" (via hook dispatching script: dispatch) failed: exit status 1
+unit-postgresql-k8s-aws-1: 01:43:04 ERROR unit.postgresql-k8s-aws/1.juju-log non-zero exit code 56 executing ['pgbackrest', '--stanza=test.patroni-postgresql-k8s-aws', '--log-level-console=debug', '--type=full', 'backup'], stdout='2024-06-14 01:42:04.221 P00  DEBUG:     common/io/socket/common::sckInit: (block: false, keepAlive: true, tcpKeepAliveCount: 0, tcpKeepAliveIdle: 0, tcpKeepAliveInterval: 0)\n2024-06-14 01:42:04.221 P00  DEBUG:     common/io/socket/common::sckInit: => void\n2024-06-14 01:42:04.223 P00   INFO: backup command begin 2.48: --backup-standby --exec-id=20860-dd0b488b --log-level-console=debug --pg2-host=postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints --pg2-host-ca-file=/var/lib/postgresql/data/ca.pem --pg2-host-cert-file=/var/lib/postgresql/data/cert.pem --pg2-host-key-file=/var/lib/postgresql/data/key.pem --pg2-host-type=tls --pg1-path=/var/lib/postgresql/data/pgdata --pg2-path=/var/lib/postgresql/data/pgdata --pg1-user=backup --pg2-user=backup --repo1-block --repo1-bundle --repo1-path=/postgresql-k8s/a3dfa8c6-29ed-11ef-af8b-cb511c222148 --repo1-retention-full=9999999 --repo1-retention-full-type=time --repo1-retention-history=365 --repo1-s3-bucket=data-charms-testing --repo1-s3-endpoint=https://s3.amazonaws.com --r' [truncated], stderr="WARN: unable to check pg2: [HostConnectError] unable to connect to 'postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints:8432 (10.1.149.140)': [111] Connection refused\n          [HostConnectError] on 12 retries from 101-60000ms: unable to connect to 'postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints:8432 (10.1.149.140)': [111] Connection refused\nERROR: [056]: unable to find primary cluster - cannot proceed\n       HINT: are all available clusters in recovery?\n       --------------------------------------------------------------------\n       If SUBMITTING AN ISSUE please provide the following information:\n       \n       version: 2.48\n       command: backup\n       options: --backup-standby --exec-id=20860-dd0b488b --log-level-console=debug --pg2-host=postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints --pg2-host-ca-file=/var/lib/postgresql/data/ca.pem --pg2-host-cert-file=/var/lib/postgresql/data/cert.pem --pg2-host-key-file=/var/lib/postgresql/data/key.pem --pg2-host-type=tls --pg1-path=/var/lib/postgresql/data/pgda" [truncated]
+Traceback (most recent call last):
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-1/charm/src/backups.py", line 571, in _on_create_backup_action
+    stdout, stderr = self._execute_command(command)
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-1/charm/src/backups.py", line 263, in _execute_command
+    ).wait_output()
+  File "/var/lib/juju/agents/unit-postgresql-k8s-aws-1/charm/venv/ops/pebble.py", line 1559, in wait_output
+    raise ExecError[AnyStr](self._command, exit_code, out_value, err_value)
+ops.pebble.ExecError: non-zero exit code 56 executing ['pgbackrest', '--stanza=test.patroni-postgresql-k8s-aws', '--log-level-console=debug', '--type=full', 'backup'], stdout='2024-06-14 01:42:04.221 P00  DEBUG:     common/io/socket/common::sckInit: (block: false, keepAlive: true, tcpKeepAliveCount: 0, tcpKeepAliveIdle: 0, tcpKeepAliveInterval: 0)\n2024-06-14 01:42:04.221 P00  DEBUG:     common/io/socket/common::sckInit: => void\n2024-06-14 01:42:04.223 P00   INFO: backup command begin 2.48: --backup-standby --exec-id=20860-dd0b488b --log-level-console=debug --pg2-host=postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints --pg2-host-ca-file=/var/lib/postgresql/data/ca.pem --pg2-host-cert-file=/var/lib/postgresql/data/cert.pem --pg2-host-key-file=/var/lib/postgresql/data/key.pem --pg2-host-type=tls --pg1-path=/var/lib/postgresql/data/pgdata --pg2-path=/var/lib/postgresql/data/pgdata --pg1-user=backup --pg2-user=backup --repo1-block --repo1-bundle --repo1-path=/postgresql-k8s/a3dfa8c6-29ed-11ef-af8b-cb511c222148 --repo1-retention-full=9999999 --repo1-retention-full-type=time --repo1-retention-history=365 --repo1-s3-bucket=data-charms-testing --repo1-s3-endpoint=https://s3.amazonaws.com --r' [truncated], stderr="WARN: unable to check pg2: [HostConnectError] unable to connect to 'postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints:8432 (10.1.149.140)': [111] Connection refused\n          [HostConnectError] on 12 retries from 101-60000ms: unable to connect to 'postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints:8432 (10.1.149.140)': [111] Connection refused\nERROR: [056]: unable to find primary cluster - cannot proceed\n       HINT: are all available clusters in recovery?\n       --------------------------------------------------------------------\n       If SUBMITTING AN ISSUE please provide the following information:\n       \n       version: 2.48\n       command: backup\n       options: --backup-standby --exec-id=20860-dd0b488b --log-level-console=debug --pg2-host=postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints --pg2-host-ca-file=/var/lib/postgresql/data/ca.pem --pg2-host-cert-file=/var/lib/postgresql/data/cert.pem --pg2-host-key-file=/var/lib/postgresql/data/key.pem --pg2-host-type=tls --pg1-path=/var/lib/postgresql/data/pgda" [truncated]
+unit-postgresql-k8s-aws-1: 01:43:05 ERROR unit.postgresql-k8s-aws/1.juju-log Backup failed: Failed to backup PostgreSQL with error: non-zero exit code 56 executing ['pgbackrest', '--stanza=test.patroni-postgresql-k8s-aws', '--log-level-console=debug', '--type=full', 'backup'], stdout='2024-06-14 01:42:04.221 P00  DEBUG:     common/io/socket/common::sckInit: (block: false, keepAlive: true, tcpKeepAliveCount: 0, tcpKeepAliveIdle: 0, tcpKeepAliveInterval: 0)\n2024-06-14 01:42:04.221 P00  DEBUG:     common/io/socket/common::sckInit: => void\n2024-06-14 01:42:04.223 P00   INFO: backup command begin 2.48: --backup-standby --exec-id=20860-dd0b488b --log-level-console=debug --pg2-host=postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints --pg2-host-ca-file=/var/lib/postgresql/data/ca.pem --pg2-host-cert-file=/var/lib/postgresql/data/cert.pem --pg2-host-key-file=/var/lib/postgresql/data/key.pem --pg2-host-type=tls --pg1-path=/var/lib/postgresql/data/pgdata --pg2-path=/var/lib/postgresql/data/pgdata --pg1-user=backup --pg2-user=backup --repo1-block --repo1-bundle --repo1-path=/postgresql-k8s/a3dfa8c6-29ed-11ef-af8b-cb511c222148 --repo1-retention-full=9999999 --repo1-retention-full-type=time --repo1-retention-history=365 --repo1-s3-bucket=data-charms-testing --repo1-s3-endpoint=https://s3.amazonaws.com --r' [truncated], stderr="WARN: unable to check pg2: [HostConnectError] unable to connect to 'postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints:8432 (10.1.149.140)': [111] Connection refused\n          [HostConnectError] on 12 retries from 101-60000ms: unable to connect to 'postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints:8432 (10.1.149.140)': [111] Connection refused\nERROR: [056]: unable to find primary cluster - cannot proceed\n       HINT: are all available clusters in recovery?\n       --------------------------------------------------------------------\n       If SUBMITTING AN ISSUE please provide the following information:\n       \n       version: 2.48\n       command: backup\n       options: --backup-standby --exec-id=20860-dd0b488b --log-level-console=debug --pg2-host=postgresql-k8s-aws-0.postgresql-k8s-aws-endpoints --pg2-host-ca-file=/var/lib/postgresql/data/ca.pem --pg2-host-cert-file=/var/lib/postgresql/data/cert.pem --pg2-host-key-file=/var/lib/postgresql/data/key.pem --pg2-host-type=tls --pg1-path=/var/lib/postgresql/data/pgda" [truncated]
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:947 Forgetting model main...
