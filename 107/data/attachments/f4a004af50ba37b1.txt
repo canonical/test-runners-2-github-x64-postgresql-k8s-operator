@@ -1,0 +1,22 @@
+[32mINFO    [0m integration.test_backups:test_backups.py:87 deleting the previously created backups
+[32mINFO    [0m pytest_operator.plugin:plugin.py:862 Model status:
+
+Model  Controller          Cloud/Region        Version  SLA          Timestamp
+test   microk8s-localhost  microk8s/localhost  3.1.8    unsupported  01:47:32Z
+
+App                       Version  Status   Scale  Charm                     Channel        Rev  Address         Exposed  Message
+postgresql-k8s-aws        14.11    waiting      2  postgresql-k8s                             0  10.152.183.18   no       installing agent
+s3-integrator                      waiting      1  s3-integrator             latest/stable   24  10.152.183.230  no       installing agent
+self-signed-certificates           active       1  self-signed-certificates  latest/stable  155  10.152.183.122  no       
+
+Unit                         Workload  Agent      Address      Ports  Message
+postgresql-k8s-aws/0         waiting   executing  10.1.73.140         awaiting for member to start
+postgresql-k8s-aws/1*        active    idle       10.1.73.141         Primary
+s3-integrator/0*             blocked   idle       10.1.73.136         Missing parameters: ['access-key', 'secret-key']
+self-signed-certificates/0*  active    idle       10.1.73.137         
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:868 Juju error logs:
+
+unit-postgresql-k8s-aws-0: 01:38:08 ERROR unit.postgresql-k8s-aws/0.juju-log certificates:4: Cannot push TLS certificates: RetryError(<Future at 0x7fba62cb2e30 state=finished raised ConnectionError>)
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:947 Forgetting model main...
