@@ -1,0 +1,25 @@
+[32mINFO    [0m integration.ha_tests.test_async_replication:test_async_replication.py:86 Destroying second model
+[32mINFO    [0m pytest_operator.plugin:plugin.py:903 Model status:
+
+Model  Controller          Cloud/Region        Version  SLA          Timestamp
+test   microk8s-localhost  microk8s/localhost  3.4.5    unsupported  02:22:15Z
+
+App                  Version  Status   Scale  Charm                Channel      Rev  Address        Exposed  Message
+postgresql-k8s       14.13    waiting      3  postgresql-k8s                      0  10.152.183.89  no       installing agent
+postgresql-test-app           active       1  postgresql-test-app  latest/edge  275  10.152.183.92  no       received database credentials of the first database
+
+Unit                    Workload  Agent      Address     Ports  Message
+postgresql-k8s/0        active    idle       10.1.84.12         
+postgresql-k8s/1        active    idle       10.1.84.14         
+postgresql-k8s/2*       waiting   executing  10.1.84.13         awaiting for primary endpoint to be ready
+postgresql-test-app/0*  active    idle       10.1.84.21         received database credentials of the first database
+
+Offer              Application     Charm           Rev  Connected  Endpoint           Interface         Role
+replication        postgresql-k8s  postgresql-k8s  0    0/0        replication        postgresql_async  requirer
+replication-offer  postgresql-k8s  postgresql-k8s  0    0/0        replication-offer  postgresql_async  provider
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:909 Juju error logs:
+
+unit-postgresql-k8s-2: 01:49:19 ERROR juju.worker.dependency "uniter" manifold worker returned unexpected error: relation scope id "1741c97d-3ccc-4198-8212-2588f5fd8f52:r#5#remote-ce743874feef4bf682df3da95674cf6b": settings 1741c97d-3ccc-4198-8212-2588f5fd8f52:r#5#remote-ce743874feef4bf682df3da95674cf6b not found (not found)
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:991 Forgetting model main...
