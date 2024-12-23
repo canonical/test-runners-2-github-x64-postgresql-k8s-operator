@@ -1,0 +1,37 @@
+[32mINFO    [0m pytest_operator.plugin:plugin.py:903 Model status:
+
+Model  Controller          Cloud/Region        Version  SLA          Timestamp
+test   microk8s-localhost  microk8s/localhost  3.4.5    unsupported  02:18:31Z
+
+App                  Version  Status   Scale  Charm                Channel      Rev  Address         Exposed  Message
+another-application           active       1  postgresql-test-app  latest/edge  305  10.152.183.168  no       received database credentials of the first database
+another-database     14.13    active       3  postgresql-k8s                      1  10.152.183.53   no       
+database             14.13    waiting      3  postgresql-k8s                      0  10.152.183.235  no       installing agent
+postgresql-test-app           active       2  postgresql-test-app  latest/edge  305  10.152.183.145  no       
+
+Unit                    Workload  Agent      Address       Ports  Message
+another-application/0*  active    idle       10.1.117.150         received database credentials of the first database
+another-database/0      active    idle       10.1.117.144         
+another-database/1      active    idle       10.1.117.146         
+another-database/2*     active    idle       10.1.117.145         Primary
+database/0*             waiting   idle       10.1.117.147         Updating extensions
+database/1              waiting   executing  10.1.117.151         Updating extensions
+database/2              waiting   executing  10.1.117.152         Updating extensions
+postgresql-test-app/0   active    idle       10.1.117.136         
+postgresql-test-app/1*  active    idle       10.1.117.137         
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:909 Juju error logs:
+
+unit-database-1: 01:35:01 ERROR unit.database/1.juju-log pgdata folder not found in /var/lib/postgresql/data/pgdata
+unit-database-1: 01:35:21 ERROR unit.database/1.juju-log pgdata folder not found in /var/lib/postgresql/data/pgdata
+unit-database-1: 01:35:31 ERROR unit.database/1.juju-log pgdata folder not found in /var/lib/postgresql/data/pgdata
+unit-database-1: 01:35:41 ERROR unit.database/1.juju-log pgdata folder not found in /var/lib/postgresql/data/pgdata
+unit-database-2: 01:35:50 ERROR unit.database/2.juju-log pgdata folder not found in /var/lib/postgresql/data/pgdata
+unit-database-0: 01:41:29 ERROR unit.database/0.juju-log Kubernetes service get failed: services "database" not found
+unit-database-0: 01:41:29 ERROR unit.database/0.juju-log Kubernetes service patch failed: services "database" not found
+unit-database-0: 01:41:39 ERROR unit.database/0.juju-log Kubernetes service get failed: services "database" not found
+unit-database-0: 01:41:39 ERROR unit.database/0.juju-log Kubernetes service patch failed: services "database" not found
+unit-database-0: 01:41:48 ERROR unit.database/0.juju-log Kubernetes service get failed: services "database" not found
+unit-database-0: 01:41:48 ERROR unit.database/0.juju-log Kubernetes service patch failed: services "database" not found
+
+[32mINFO    [0m pytest_operator.plugin:plugin.py:991 Forgetting model main...
